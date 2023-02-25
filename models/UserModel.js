@@ -1,13 +1,46 @@
-const mongoose = require('mongoose');
-mongoose.set('strictQuery', false)
+const mongoose = require("mongoose");
+require("dotenv").config();
 const userSchema = new mongoose.Schema({
- name :{type:String,required:true},
- email :{type:String,required:true},
- password :{type:String,required:true}
-})
-const UserModel = mongoose.model("user",userSchema)
+  profilePicture: {
+    type: String,
+  },
+  bio: {
+    type: String,
+    minlength: 3,
+  },
+  name: {
+    type: String,
+    required: true,
+    minlength: 3,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: Number,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 8,
+    trim: true,
+  },
+
+  tokens: [
+    {
+      token: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
+
+});
+
+const UserModel = new mongoose.model("user", userSchema);
 
 module.exports = {
-UserModel
-}
-
+  UserModel,
+};

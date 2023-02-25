@@ -5,7 +5,7 @@ require("dotenv").config();
 
 // signup
 const signup = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { profilePicture,bio,name, email,phone, password } = req.body;
   const isUser = await UserModel.findOne({ email });
   if (isUser) {
     res.send({ msg: "User already exist,logging in" });
@@ -15,8 +15,11 @@ const signup = async (req, res) => {
         res.send({ msg: "Something went wrong, please try again later" });
       }
       const new_user = new UserModel({
+        profilePicture,
+        bio,
         name,
         email,
+        phone,
         password: hash,
       });
 
@@ -53,11 +56,39 @@ const login = async (req, res) => {
 const getProfile = async (req, res) => {
   const { user_id } = req.body;
   const user = await UserModel.findOne({ _id: user_id });
-  const { name, email } = user;
-  res.send({ name, email });
+  const {profilePicture,bio, name, email,phone } = user;
+  res.send({profilePicture,bio, name, email ,phone});
+};
+
+
+const editProfile = async (req, res) => {
+  const { name, email, phone, bio, profilePicture } = req.body;
+  const user_id = req.user_id;
+
+  try {
+    const updatedUser = await UserModel.findOneAndUpdate(
+      { _id: user_id },
+      {
+        $set: {
+          name,
+          email,
+          phone,
+          bio,
+          profilePicture,
+        },
+      },
+      { new: true }
+    );
+
+    const { profilePicture: newProfilePicture, bio: newBio, name: newName, email: newEmail, phone: newPhone } = updatedUser;
+    res.send({ newProfilePicture, newBio, newName, newEmail, newPhone });
+  } catch (err) {
+    res.send({ msg: "Something went wrong, please try again later" });
+  }
 };
 
 module.exports = {
+  editProfile,
   signup,
   login,
   getProfile
