@@ -1,8 +1,8 @@
 const express = require("express");
 var cors = require('cors')
 const { connection } = require("./config/db");
-const { authentication } = require("./middleware/authentication");
-const { AuthRouter } = require("./routes/AuthRoute");
+const { ProductRouter } = require("./routes/ProductRoute");
+
 require("dotenv").config()
 const app = express();
 const PORT = process.env.PORT || 4000
@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
   res.send("WELCOME");
 });
 
-app.use('/auth',AuthRouter)
+app.use('/olx',ProductRouter)
 
 
 
