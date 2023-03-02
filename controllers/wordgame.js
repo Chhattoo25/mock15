@@ -54,7 +54,7 @@ const scoreUpdate = async (req, res) => {
 
   const user = await WordGameModel.findOneAndUpdate(
     { name: name },
-    { $inc: { score: score } },
+    { $inc: { score: parseInt(score) } },
     { new: true }
   );
 
