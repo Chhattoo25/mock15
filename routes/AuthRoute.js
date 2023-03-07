@@ -9,6 +9,6 @@ AuthRouter.post("/signup", signup);
 
 AuthRouter.post("/login", login);
 
-AuthRouter.get("/getProfile",authentication, getProfile);
+// AuthRouter.get("/getProfile", getProfile);
 
 module.exports = { AuthRouter };
