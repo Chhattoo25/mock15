@@ -16,7 +16,7 @@ app.use("/auth", AuthRouter);
 app.listen(PORT, async () => {
   try {
     await connection;
-    console.log("connected to db successfully");
+    console.log("connected to h db successfully");
   } catch (err) {
     console.log(err);
     console.log("err connected to db");
